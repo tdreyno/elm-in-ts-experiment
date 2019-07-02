@@ -1,0 +1,56 @@
+{
+  "name": "elmish",
+  "version": "1.0.0",
+  "scripts": {
+    "lint": "tslint --project .",
+    "build": "pack build",
+    "test": "yarn build && node pkg/dist-node/index.js"
+  },
+  "@pika/pack": {
+    "pipeline": [
+      [
+        "@pika/plugin-ts-standard-pkg",
+        {
+          "exclude": [
+            "__tests__/**/*"
+          ]
+        }
+      ],
+      [
+        "@pika/plugin-build-node"
+      ],
+      [
+        "@pika/plugin-build-web"
+      ]
+    ]
+  },
+  "dependencies": {
+    "fetch-ponyfill": "^6.1.0",
+    "unionize": "^3.0.1"
+  },
+  "devDependencies": {
+    "@pika/pack": "^0.4.0",
+    "@pika/plugin-build-node": "^0.4.0",
+    "@pika/plugin-build-web": "^0.4.0",
+    "@pika/plugin-ts-standard-pkg": "^0.4.0",
+    "@types/node": "^12.0.2",
+    "husky": "^3.0.0",
+    "lint-staged": "^9.0.0",
+    "prettier": "^1.15.3",
+    "tslint": "^5.18.0",
+    "tslint-config-prettier": "^1.17.0",
+    "tslint-immutable": "^6.0.0",
+    "typescript": "^3.5.0"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,css,md}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged && yarn test"
+    }
+  }
+}
